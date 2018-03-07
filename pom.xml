@@ -12,16 +12,37 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <hadoop.version>2.9.0</hadoop.version>
   </properties>
 
   <dependencies>
-  
+  	<dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>${hadoop.version}</version>  	
+  	</dependency>
+  	
+  	<dependency>
+      <groupId>org.apache.mrunit</groupId>
+      <artifactId>mrunit</artifactId>
+      <version>1.1.0</version>
+      <classifier>hadoop2</classifier>        	
+      <scope>test</scope>
+  	</dependency>  	
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    
+   	<dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-minicluster</artifactId>
+      <version>${hadoop.version}</version>  	
+      <scope>test</scope>
+  	</dependency>
+  	   
   </dependencies>
   
   <build>
@@ -35,6 +56,14 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+		  <outputDirectory>${baseDir}</outputDirectory>
+        </configuration>
+      </plugin>      
 	  </plugins>
   </build>
 
