@@ -1,10 +1,13 @@
 package bigdata.andy.net.hadoopelt;
 
-import javax.xml.soap.Text;
+
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -29,13 +32,15 @@ public class HadoopELT extends Configured implements Tool {
 		job.setJarByClass(HadoopELT.class);
 		
 		FileInputFormat.addInputPath(job, new Path(args[0]));
+		Files.deleteIfExists(Paths.get(args[1]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		job.setMapperClass(HadoopELTMapper.class);
 		job.setReducerClass(HadoopELTReducer.class);
-		job.setNumReduceTasks(5);
+		job.setNumReduceTasks(3);
 		
-		job.setOutputKeyClass(NullWritable.class);
+		
+		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
 		
 		return job.waitForCompletion(true)? 0: 1;
